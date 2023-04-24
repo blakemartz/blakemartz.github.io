@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spinning Potato</title>
+  <style>
+    body, html {
+      height: 100%;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #f0f0f0;
+    }
+
+    .container {
+      display: inline-block;
+      position: relative;
+    }
+
+    .spinning-image {
+      width: 200px;
+      animation: spin 5s linear infinite;
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+  <script>
+    function getRotationDegrees(element) {
+      const st = window.getComputedStyle(element, null);
+      const tr = st.getPropertyValue("transform");
+      if (tr === "none") return 0;
+
+      const values = tr.split('(')[1].split(')')[0].split(',');
+      const a = parseFloat(values[0]);
+      const b = parseFloat(values[1]);
+      const radians = Math.atan2(b, a);
+      return (radians * (180 / Math.PI));
+    }
+
+    function increaseSpinSpeed() {
+      const image = document.querySelector(".spinning-image");
+      const currentRotation = getRotationDegrees(image);
+      const currentDuration = parseFloat(image.style.animationDuration) || 5;
+
+      // Decrease the animation duration to increase spin speed
+      const newDuration = Math.max(0.1, currentDuration - 1.0);
+
+      // Pause the animation, update the duration, and set the current rotation
+      image.style.animationPlayState = "paused";
+      image.style.animationDuration = newDuration + "s";
+      image.style.transform = "rotate(" + currentRotation + "deg)";
+
+      // Resume the animation after a brief timeout
+      setTimeout(() => {
+        image.style.animationPlayState = "running";
+      }, 1);
+    }
+  </script>
+</head>
+<body>
+  <div class="container">
+    <img class="spinning-image" src="potato_1.png" alt="Potato" onclick="increaseSpinSpeed()">
+  </div>
+</body>
+</html>
