@@ -32,6 +32,24 @@
         transform: rotate(360deg);
       }
     }
+
+    footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.75rem;
+    padding: 10px;
+    background-color: #f0f0f0;
+    }
+
+    footer:hover {
+    color: #000000; 
+    text-decoration: underline;
+    cursor: pointer;
+    }
+
   </style>
   <script>
     function getRotationDegrees(element) {
@@ -74,5 +92,13 @@
   <div class="container">
     <img class="spinning-image" src="potato_1.png" alt="Potato" onclick="increaseSpinSpeed()">
   </div>
+  <footer>
+    <span id="footer-text">
+      Powered by Jack.
+    </span>
+  </footer>
+  <script>
+    document.getElementById("footer-text").addEventListener("click", increaseSpinSpeed);
+  </script>
 </body>
 </html>
